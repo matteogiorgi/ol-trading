@@ -126,5 +126,11 @@ def compute_best_expert_in_hindsight(
     Return the name and return series of the best expert in hindsight.
     """
     cumulative_returns = (1.0 + expert_returns_df).prod(axis=0) - 1.0
-    best_name = cumulative_returns.idxmax()
+
+    # The explicit str() conversion suggests idxmax() might return a
+    # non-string type, but this could indicate an underlying type inconsistency.
+    # ----
+    # Consider ensuring expert_returns_df column names are strings
+    # from the outset rather than converting at the point of use.
+    best_name = str(cumulative_returns.idxmax())
     return best_name, expert_returns_df[best_name].copy()

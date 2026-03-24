@@ -1,9 +1,10 @@
 from __future__ import annotations
-
+from pathlib import Path
 from typing import cast
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from matplotlib.backends.backend_pdf import PdfPages
 
 from backtest import (
     compute_best_expert_in_hindsight,
@@ -16,11 +17,17 @@ from learner import HedgeLearner
 from metrics import cumulative_wealth, summary_metrics
 
 
-def print_metrics_table(title: str, metrics_dict: dict[str, float]) -> None:
-    print(f"\n{title}")
-    print("-" * len(title))
+def format_metrics_table(title: str, metrics_dict: dict[str, float]) -> str:
+    lines = [f"\n{title}", "-" * len(title)]
     for key, value in metrics_dict.items():
-        print(f"{key:>24}: {value: .6f}")
+        lines.append(f"{key:>24}: {value: .6f}")
+    return "\n".join(lines)
+
+
+def build_metrics_report(sections: list[tuple[str, dict[str, float]]]) -> str:
+    return "\n".join(
+        format_metrics_table(title, metrics_dict) for title, metrics_dict in sections
+    ).lstrip()
 
 
 def main() -> None:
@@ -61,11 +68,15 @@ def main() -> None:
     equal_weight_metrics = summary_metrics(equal_weight)
     best_expert_metrics = summary_metrics(best_expert)
 
-    print_metrics_table("Hedge Portfolio (gross)", portfolio_metrics)
-    print_metrics_table("Hedge Portfolio (net)", portfolio_net_metrics)
-    print_metrics_table("Buy and Hold", buy_and_hold_metrics)
-    print_metrics_table("Equal Weight Experts", equal_weight_metrics)
-    print_metrics_table(f"Best Expert in Hindsight: {best_name}", best_expert_metrics)
+    metrics_sections = [
+        ("Hedge Portfolio (gross)", portfolio_metrics),
+        ("Hedge Portfolio (net)", portfolio_net_metrics),
+        ("Buy and Hold", buy_and_hold_metrics),
+        ("Equal Weight Experts", equal_weight_metrics),
+        (f"Best Expert in Hindsight: {best_name}", best_expert_metrics),
+    ]
+    metrics_report = build_metrics_report(metrics_sections)
+    print(metrics_report)
 
     # Wealth curves
     wealth_df = pd.DataFrame(
@@ -78,34 +89,41 @@ def main() -> None:
         }
     )
 
-    plt.figure(figsize=(12, 6))
-    wealth_df.plot(ax=plt.gca())
-    plt.title(f"Cumulative Wealth - {ticker}")
-    plt.xlabel("Date")
-    plt.ylabel("Wealth")
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
+    fig, axes = plt.subplots(3, 1, figsize=(14, 14), sharex=True)
 
-    # Expert weights over time
-    plt.figure(figsize=(12, 6))
-    weights_df.plot(ax=plt.gca())
-    plt.title("Expert Weights Over Time")
-    plt.xlabel("Date")
-    plt.ylabel("Weight")
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
+    wealth_df.plot(ax=axes[0])
+    axes[0].set_title(f"Cumulative Wealth - {ticker}")
+    axes[0].set_ylabel("Wealth")
+    axes[0].grid(True)
 
-    # Turnover
-    plt.figure(figsize=(12, 4))
-    turnover.plot(ax=plt.gca())
-    plt.title("Daily Turnover")
-    plt.xlabel("Date")
-    plt.ylabel("Turnover")
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
+    weights_df.plot(ax=axes[1])
+    axes[1].set_title("Expert Weights Over Time")
+    axes[1].set_ylabel("Weight")
+    axes[1].grid(True)
+
+    turnover.plot(ax=axes[2], color="black")
+    axes[2].set_title("Daily Turnover")
+    axes[2].set_xlabel("Date")
+    axes[2].set_ylabel("Turnover")
+    axes[2].grid(True)
+
+    fig.tight_layout()
+
+    output_dir = Path("outputs")
+    output_dir.mkdir(exist_ok=True)
+
+    report_stem = f"{ticker.lower()}_{start}_{end}"
+    pdf_path = output_dir / f"{report_stem}_plots.pdf"
+    txt_path = output_dir / f"{report_stem}_metrics.txt"
+
+    with PdfPages(pdf_path) as pdf:
+        pdf.savefig(fig)
+
+    txt_path.write_text(metrics_report + "\n", encoding="utf-8")
+    plt.close(fig)
+
+    print(f"\nPlot salvati in: {pdf_path}")
+    print(f"Output testuale salvato in: {txt_path}")
 
 
 if __name__ == "__main__":
