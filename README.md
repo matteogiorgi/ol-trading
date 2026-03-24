@@ -32,7 +32,7 @@ In pratica, il progetto serve a rispondere a questa domanda:
 
 L'asset usato di default e `SPY`, con dati giornalieri scaricati tramite `yfinance`.
 
-In [`data_loader.py`](ol-trading/data_loader.py) il download viene fatto con:
+In [`data_loader.py`](data_loader.py) il download viene fatto con:
 
 - `auto_adjust=True`, quindi il prezzo usato e gia adjusted
 - selezione della colonna `Close`
@@ -48,7 +48,7 @@ $$
 
 ### Esperti
 
-Gli esperti sono definiti in [`experts.py`](ol-trading/experts.py). Ogni esperto restituisce un segnale binario:
+Gli esperti sono definiti in [`experts.py`](experts.py). Ogni esperto restituisce un segnale binario:
 
 $$
 s_{t,i} \in \{0,1\}
@@ -79,7 +79,7 @@ Gli esperti di default sono:
 
 ### Learner Hedge
 
-Il learner e implementato in [`learner.py`](ol-trading/learner.py).
+Il learner e implementato in [`learner.py`](learner.py).
 
 Dato un vettore di pesi
 
@@ -111,7 +111,7 @@ Commento operativo:
 
 ## 3. Logica del backtest
 
-La logica centrale e in [`backtest.py`](ol-trading/backtest.py).
+La logica centrale e in [`backtest.py`](backtest.py).
 
 Per ogni data `t`, il codice:
 
@@ -149,7 +149,7 @@ $$
 r_t^{(net)} = r_t^{(portfolio)} - c \cdot turnover_t
 $$
 
-Nel file [`main.py`](ol-trading/main.py) il costo di transazione di default e `0.0005`.
+Nel file [`main.py`](main.py) il costo di transazione di default e `0.0005`.
 
 
 
@@ -169,7 +169,7 @@ Il benchmark "best expert in hindsight" non e investibile in tempo reale, ma e u
 
 ## 5. Metriche calcolate
 
-Le metriche sono implementate in [`metrics.py`](ol-trading/metrics.py).
+Le metriche sono implementate in [`metrics.py`](metrics.py).
 
 Per ciascuna serie di rendimenti vengono calcolate:
 
@@ -224,7 +224,7 @@ Le dipendenze principali sono:
 - `matplotlib`
 - `yfinance`
 
-Sono elencate in [`requirements.txt`](ol-trading/requirements.txt).
+Sono elencate in [`requirements.txt`](requirements.txt).
 
 
 ### Avvio
@@ -235,7 +235,7 @@ Per eseguire il progetto:
 python main.py
 ```
 
-I parametri principali sono attualmente definiti direttamente in [`main.py`](ol-trading/main.py#L33):
+I parametri principali sono attualmente definiti direttamente in [`main.py`](main.py#L33):
 
 - `ticker = "SPY"`
 - `start = "2015-01-01"`
@@ -265,7 +265,7 @@ Il programma stampa a terminale una tabella di metriche per:
 
 Lo stesso contenuto viene salvato in un file `.txt`, per esempio:
 
-[`outputs/spy_2015-01-01_2025-01-01_metrics.txt`](ol-trading/outputs/spy_2015-01-01_2025-01-01_metrics.txt)
+[`outputs/spy_2015-01-01_2025-01-01_metrics.txt`](outputs/spy_2015-01-01_2025-01-01_metrics.txt)
 
 Questo e utile per:
 
@@ -278,7 +278,7 @@ Questo e utile per:
 
 I plot non vengono piu mostrati solo con `plt.show()`, ma salvati in un PDF multipagina-friendly contenente la figura composta. Il file ha forma:
 
-[`outputs/spy_2015-01-01_2025-01-01_plots.pdf`](ol-trading/outputs/spy_2015-01-01_2025-01-01_plots.pdf)
+[`outputs/spy_2015-01-01_2025-01-01_plots.pdf`](outputs/spy_2015-01-01_2025-01-01_plots.pdf)
 
 Nello stato attuale la figura contiene tre pannelli:
 
@@ -299,12 +299,12 @@ Commento pratico:
 
 Il progetto e suddiviso in moduli con responsabilita abbastanza chiare:
 
-- [`data_loader.py`](ol-trading/data_loader.py): download prezzi e calcolo rendimenti
-- [`experts.py`](ol-trading/experts.py): definizione degli esperti e factory degli esperti di default
-- [`learner.py`](ol-trading/learner.py): algoritmo Hedge
-- [`backtest.py`](ol-trading/backtest.py): simulazione storica e benchmark
-- [`metrics.py`](ol-trading/metrics.py): metriche di performance
-- [`main.py`](ol-trading/main.py): orchestrazione end-to-end, stampa report e salvataggio output
+- [`data_loader.py`](data_loader.py): download prezzi e calcolo rendimenti
+- [`experts.py`](experts.py): definizione degli esperti e factory degli esperti di default
+- [`learner.py`](learner.py): algoritmo Hedge
+- [`backtest.py`](backtest.py): simulazione storica e benchmark
+- [`metrics.py`](metrics.py): metriche di performance
+- [`main.py`](main.py): orchestrazione end-to-end, stampa report e salvataggio output
 
 
 
