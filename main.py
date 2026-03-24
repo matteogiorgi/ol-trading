@@ -1,4 +1,5 @@
 from __future__ import annotations
+from datetime import datetime
 from pathlib import Path
 from typing import cast
 
@@ -112,9 +113,10 @@ def main() -> None:
     output_dir = Path("outputs")
     output_dir.mkdir(exist_ok=True)
 
-    report_stem = f"{ticker.lower()}_{start}_{end}"
-    pdf_path = output_dir / f"{report_stem}_plots.pdf"
-    txt_path = output_dir / f"{report_stem}_metrics.txt"
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    report_prefix = f"{ticker.lower()}_{start}_{end}"
+    pdf_path = output_dir / f"{report_prefix}_plots_{timestamp}.pdf"
+    txt_path = output_dir / f"{report_prefix}_metrics_{timestamp}.txt"
 
     with PdfPages(pdf_path) as pdf:
         pdf.savefig(fig)

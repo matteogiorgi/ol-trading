@@ -1,0 +1,36 @@
+Hedge Portfolio (gross)
+-----------------------
+       cumulative_return:  1.405288
+            sharpe_ratio:  0.786807
+   annualized_volatility:  0.122204
+            max_drawdown: -0.216229
+        average_turnover:  0.011561
+
+Hedge Portfolio (net)
+---------------------
+       cumulative_return:  1.370839
+            sharpe_ratio:  0.774853
+   annualized_volatility:  0.122210
+            max_drawdown: -0.217057
+        average_turnover:  0.011561
+
+Buy and Hold
+------------
+       cumulative_return:  2.454766
+            sharpe_ratio:  0.799219
+   annualized_volatility:  0.176223
+            max_drawdown: -0.337173
+
+Equal Weight Experts
+--------------------
+       cumulative_return:  1.106243
+            sharpe_ratio:  0.915611
+   annualized_volatility:  0.086253
+            max_drawdown: -0.146976
+
+Best Expert in Hindsight: buy_and_hold
+--------------------------------------
+       cumulative_return:  2.454766
+            sharpe_ratio:  0.799219
+   annualized_volatility:  0.176223
+            max_drawdown: -0.337173

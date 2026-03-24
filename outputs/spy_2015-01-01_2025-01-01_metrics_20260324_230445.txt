@@ -1,18 +1,18 @@
 Hedge Portfolio (gross)
 -----------------------
-       cumulative_return:  1.406835
-            sharpe_ratio:  0.788119
-   annualized_volatility:  0.122061
-            max_drawdown: -0.215869
-        average_turnover:  0.011574
+       cumulative_return:  1.405287
+            sharpe_ratio:  0.786806
+   annualized_volatility:  0.122205
+            max_drawdown: -0.216229
+        average_turnover:  0.011561
 
 Hedge Portfolio (net)
 ---------------------
-       cumulative_return:  1.372327
-            sharpe_ratio:  0.776137
-   annualized_volatility:  0.122067
-            max_drawdown: -0.216697
-        average_turnover:  0.011574
+       cumulative_return:  1.370838
+            sharpe_ratio:  0.774852
+   annualized_volatility:  0.122210
+            max_drawdown: -0.217057
+        average_turnover:  0.011561
 
 Buy and Hold
 ------------
@@ -23,10 +23,10 @@ Buy and Hold
 
 Equal Weight Experts
 --------------------
-       cumulative_return:  1.108418
-            sharpe_ratio:  0.916782
-   annualized_volatility:  0.086257
-            max_drawdown: -0.146976
+       cumulative_return:  1.106242
+            sharpe_ratio:  0.915610
+   annualized_volatility:  0.086253
+            max_drawdown: -0.146977
 
 Best Expert in Hindsight: buy_and_hold
 --------------------------------------

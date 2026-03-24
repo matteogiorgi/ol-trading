@@ -265,9 +265,9 @@ Il programma stampa a terminale una tabella di metriche per:
 
 Lo stesso contenuto viene salvato in un file `.txt`, per esempio:
 
-[`outputs/spy_2015-01-01_2025-01-01_metrics.txt`](outputs/spy_2015-01-01_2025-01-01_metrics.txt)
+[`outputs/spy_2015-01-01_2025-01-01_metrics_20260324_153045.txt`](outputs/spy_2015-01-01_2025-01-01_metrics_20260324_153045.txt)
 
-Questo e utile per:
+Questo è utile per:
 
 - conservare i risultati di una run
 - confrontare run diverse
@@ -278,7 +278,7 @@ Questo e utile per:
 
 I plot non vengono piu mostrati solo con `plt.show()`, ma salvati in un PDF multipagina-friendly contenente la figura composta. Il file ha forma:
 
-[`outputs/spy_2015-01-01_2025-01-01_plots.pdf`](outputs/spy_2015-01-01_2025-01-01_plots.pdf)
+[`outputs/spy_2015-01-01_2025-01-01_plots_20260324_153045.pdf`](outputs/spy_2015-01-01_2025-01-01_plots_20260324_153045.pdf)
 
 Nello stato attuale la figura contiene tre pannelli:
 
